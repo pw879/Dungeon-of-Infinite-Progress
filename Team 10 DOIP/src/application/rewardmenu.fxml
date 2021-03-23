@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RewardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RewardController">
    <children>
       <Label layoutX="44.0" layoutY="43.0" text="Reward Vault" textFill="WHITE">
          <font>
@@ -56,16 +56,16 @@
       <TextArea fx:id="description" layoutX="233.0" layoutY="632.0" prefHeight="26.0" prefWidth="409.0" />
       <TableView fx:id="purchaseTable" layoutX="44.0" layoutY="110.0" prefHeight="148.0" prefWidth="622.0">
         <columns>
-          <TableColumn prefWidth="187.0" text="Reward" />
-          <TableColumn prefWidth="360.0" text="Description" />
-            <TableColumn prefWidth="74.0" text="Cost" />
+          <TableColumn fx:id="pRewardCol" prefWidth="187.0" text="Reward" />
+          <TableColumn fx:id="pDescriptionCol" prefWidth="360.0" text="Description" />
+            <TableColumn fx:id="pCostCol" prefWidth="74.0" text="Cost" />
         </columns>
       </TableView>
       <TableView fx:id="sellTable" layoutX="44.0" layoutY="330.0" prefHeight="148.0" prefWidth="622.0">
          <columns>
-            <TableColumn prefWidth="187.0" text="Reward" />
-            <TableColumn prefWidth="360.0" text="Description" />
-            <TableColumn prefWidth="74.0" text="Cost" />
+            <TableColumn fx:id="sRewardCol" prefWidth="187.0" text="Reward" />
+            <TableColumn fx:id="sDescriptionCol" prefWidth="360.0" text="Description" />
+            <TableColumn fx:id="sCostCol" prefWidth="74.0" text="Cost" />
          </columns>
       </TableView>
       <Label layoutX="118.0" layoutY="674.0" text="Cost: " textFill="WHITE">
