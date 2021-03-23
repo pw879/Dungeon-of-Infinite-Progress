@@ -17,7 +17,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="637.0" layoutY="43.0" text="Gold Value" textFill="YELLOW">
+      <Label fx:id="gold" layoutX="637.0" layoutY="43.0" text="Gold Value" textFill="YELLOW">
          <font>
             <Font name="Book Antiqua" size="20.0" />
          </font>
@@ -39,8 +39,8 @@
             <Font name="Book Antiqua" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="673.0" layoutY="208.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="67.0" text="Buy" />
-      <Button layoutX="673.0" layoutY="426.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="67.0" text="Sell" />
+      <Button layoutX="673.0" layoutY="208.0" mnemonicParsing="false" onAction="#buyReward" prefHeight="50.0" prefWidth="67.0" text="Buy" />
+      <Button layoutX="673.0" layoutY="426.0" mnemonicParsing="false" onAction="#sellReward" prefHeight="50.0" prefWidth="67.0" text="Sell" />
       <Button layoutX="673.0" layoutY="716.0" mnemonicParsing="false" onAction="#createReward" prefHeight="50.0" prefWidth="67.0" text="Create" />
       <Label layoutX="117.0" layoutY="583.0" text="Label: " textFill="WHITE">
          <font>
