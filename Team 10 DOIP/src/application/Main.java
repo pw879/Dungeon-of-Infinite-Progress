@@ -11,8 +11,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Pane root = (Pane)FXMLLoader.load(getClass().getResource("rewardmenu.fxml")); //loads fxml file
-			Scene scene = new Scene(root,800,800);
+			Pane root = (Pane)FXMLLoader.load(getClass().getResource("/application/rewardmenu.fxml")); //loads fxml file
+			Scene scene = new Scene(root,1000,800);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
