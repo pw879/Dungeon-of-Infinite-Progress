@@ -42,39 +42,45 @@
       <Button layoutX="892.0" layoutY="208.0" mnemonicParsing="false" onAction="#buyReward" prefHeight="50.0" prefWidth="67.0" text="Buy" />
       <Button layoutX="892.0" layoutY="428.0" mnemonicParsing="false" onAction="#sellReward" prefHeight="50.0" prefWidth="67.0" text="Sell" />
       <Button layoutX="892.0" layoutY="722.0" mnemonicParsing="false" onAction="#createReward" prefHeight="50.0" prefWidth="67.0" text="Create" />
-      <Label layoutX="230.0" layoutY="579.0" text="Label: " textFill="WHITE">
+      <Label layoutX="230.0" layoutY="545.0" text="Label: " textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="231.0" layoutY="628.0" text="Description: " textFill="WHITE">
+      <Label layoutX="230.0" layoutY="591.0" text="Description: " textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextArea fx:id="label" layoutX="316.0" layoutY="579.0" prefHeight="26.0" prefWidth="439.0" />
-      <TextArea fx:id="description" layoutX="346.0" layoutY="628.0" prefHeight="26.0" prefWidth="409.0" />
+      <TextArea fx:id="label" layoutX="316.0" layoutY="545.0" prefHeight="26.0" prefWidth="439.0" />
+      <TextArea fx:id="description" layoutX="345.0" layoutY="591.0" prefHeight="26.0" prefWidth="411.0" />
       <TableView fx:id="purchaseTable" layoutX="44.0" layoutY="110.0" prefHeight="148.0" prefWidth="827.0">
         <columns>
-            <TableColumn fx:id="pIconCol" prefWidth="154.0" text="Image" />
-          <TableColumn fx:id="pRewardCol" prefWidth="134.0" text="Reward" />
+            <TableColumn fx:id="pIconCol" prefWidth="118.0" text="Image" />
+          <TableColumn fx:id="pRewardCol" prefWidth="170.0" text="Reward" />
           <TableColumn fx:id="pDescriptionCol" prefWidth="457.0" text="Description" />
             <TableColumn fx:id="pCostCol" minWidth="0.0" prefWidth="81.0" text="Cost" />
         </columns>
       </TableView>
       <TableView fx:id="sellTable" layoutX="44.0" layoutY="330.0" prefHeight="148.0" prefWidth="827.0">
          <columns>
-            <TableColumn fx:id="sIconCol" prefWidth="154.0" text="Image" />
-            <TableColumn fx:id="sRewardCol" prefWidth="139.0" text="Reward" />
-            <TableColumn fx:id="sDescriptionCol" prefWidth="417.0" text="Description" />
-            <TableColumn fx:id="sCostCol" prefWidth="116.0" text="Cost" />
+            <TableColumn fx:id="sIconCol" prefWidth="117.0" text="Image" />
+            <TableColumn fx:id="sRewardCol" prefWidth="166.0" text="Reward" />
+            <TableColumn fx:id="sDescriptionCol" prefWidth="458.0" text="Description" />
+            <TableColumn fx:id="sCostCol" prefWidth="85.0" text="Cost" />
          </columns>
       </TableView>
-      <Label layoutX="231.0" layoutY="670.0" text="Cost: " textFill="WHITE">
+      <Label layoutX="228.0" layoutY="636.0" text="Cost: " textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextArea fx:id="cost" layoutX="316.0" layoutY="670.0" prefHeight="26.0" prefWidth="439.0" />
+      <TextArea fx:id="cost" layoutX="316.0" layoutY="636.0" prefHeight="26.0" prefWidth="439.0" />
+      <Label layoutX="228.0" layoutY="679.0" text="Image:" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <VBox fx:id="imageBox" layoutX="316.0" layoutY="679.0" prefHeight="26.0" prefWidth="28.0" style="-fx-background-color: white;" />
    </children>
 </Pane>

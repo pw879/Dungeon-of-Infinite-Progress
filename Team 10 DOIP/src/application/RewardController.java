@@ -1,12 +1,15 @@
 package application;
 
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -20,6 +23,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 
 public class RewardController implements Initializable {
@@ -55,21 +63,28 @@ public class RewardController implements Initializable {
 	private TableColumn<Reward, String> pIconCol;
 	@FXML
 	private TableColumn<Reward, String> sIconCol;
+	@FXML
+	private VBox imageBox = new VBox();
 	
+	private File file;
 	
 	Alert a = new Alert(AlertType.NONE);
 	String check = "[0-9]";
 	
 	
-	public void createReward() {
+	public void createReward() throws MalformedURLException {
 		
 		if(label.getText().trim().isEmpty() || description.getText().trim().isEmpty() || cost.getText().trim().isEmpty()) {
         	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
         	a.setContentText("Please don't leave any of the text fields empty");
         	a.show();
         } else {
+        	
         		
-        			ImageView img1 = new ImageView(new Image(this.getClass().getResourceAsStream("Audhulma_W.png")));
+        			ImageView img1 = new ImageView(new Image(file.toURI().toURL().toExternalForm()));
+        			 img1.setFitHeight(200);
+        			 img1.setFitWidth(200);
+        			 img1.setPreserveRatio(true);
 					Reward newR = new Reward(img1, label.getText(), description.getText(), Integer.parseInt(cost.getText()));
 					shop.add(newR);
 					
@@ -120,6 +135,7 @@ public class RewardController implements Initializable {
 		gold.setText(String.valueOf(goldBalance));
 	}
 	
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
@@ -138,8 +154,41 @@ public class RewardController implements Initializable {
 		sDescriptionCol.setCellValueFactory(new PropertyValueFactory<Reward, String>("description"));
 		sCostCol.setCellValueFactory(new PropertyValueFactory<Reward, Integer>("cost"));
 		
+		imageBox.setOnDragOver(new EventHandler<DragEvent>() {
+			@Override
+            public void handle(DragEvent event) {
+                if (event.getGestureSource() != imageBox
+                        && event.getDragboard().hasFiles()) {
+                    /* allow for both copying and moving, whatever user chooses */
+                	imageBox.setStyle("-fx-border-color: red;"
+                            + "-fx-border-width: 5;"
+                            + "-fx-background-color: #C6C6C6;"
+                            + "-fx-border-style: solid;");
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+                event.consume();
+            }
+		});
 		
-		
+		imageBox.setOnDragDropped(new EventHandler<DragEvent>() {
+
+	            @Override
+	            public void handle(DragEvent event) {
+	                Dragboard db = event.getDragboard();
+	                boolean success = false;
+	                if (db.hasFiles()) {
+	                	file = db.getFiles().get(0);
+	                	System.out.println(file.getPath());
+	                	
+	                    success = true;
+	                }
+	                /* let the source know whether the string was successfully 
+	                 * transferred and used */
+	                event.setDropCompleted(success);
+	                imageBox.setStyle("-fx-background-color: white;");
+	                event.consume();
+	            }
+	        });
 		
 		gold.setText("100");
 		
