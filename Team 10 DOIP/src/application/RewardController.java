@@ -4,7 +4,6 @@ package application;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -13,11 +12,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,7 +23,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 
@@ -91,6 +87,8 @@ public class RewardController implements Initializable {
 					
 					purchaseTable.setItems(shop);
 					
+
+	                imageBox.setStyle("-fx-background-color: white;");
 					
 					label.clear();
 					description.clear();
@@ -112,11 +110,14 @@ public class RewardController implements Initializable {
 		sellTable.setItems(inventory);
 		selected.forEach(allItems::remove);
 		
+		
+		
 		int rewardCost = inv.getCost();
 		
 		int goldBalance = Integer.parseInt(gold.getText()) - rewardCost;
 		
 		gold.setText(String.valueOf(goldBalance));
+		
 	}
 	
 	public void sellReward() {
@@ -185,7 +186,6 @@ public class RewardController implements Initializable {
 	                /* let the source know whether the string was successfully 
 	                 * transferred and used */
 	                event.setDropCompleted(success);
-	                imageBox.setStyle("-fx-background-color: white;");
 	                event.consume();
 	            }
 	        });
