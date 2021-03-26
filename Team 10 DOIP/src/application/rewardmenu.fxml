@@ -82,5 +82,6 @@
          </font>
       </Label>
       <VBox fx:id="imageBox" layoutX="316.0" layoutY="679.0" prefHeight="26.0" prefWidth="28.0" style="-fx-background-color: white;" />
+      <Label fx:id="filePath" layoutX="353.0" layoutY="679.0" prefHeight="26.0" prefWidth="403.0" textFill="WHITE" />
    </children>
 </Pane>

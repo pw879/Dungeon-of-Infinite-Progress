@@ -61,6 +61,8 @@ public class RewardController implements Initializable {
 	private TableColumn<Reward, String> sIconCol;
 	@FXML
 	private VBox imageBox = new VBox();
+	@FXML
+	private Label filePath;
 	
 	private File file;
 	
@@ -87,12 +89,12 @@ public class RewardController implements Initializable {
 					
 					purchaseTable.setItems(shop);
 					
-
 	                imageBox.setStyle("-fx-background-color: white;");
 					
 					label.clear();
 					description.clear();
 					cost.clear();
+					filePath.setText("");
         		}
         
 	}
@@ -179,8 +181,7 @@ public class RewardController implements Initializable {
 	                boolean success = false;
 	                if (db.hasFiles()) {
 	                	file = db.getFiles().get(0);
-	                	System.out.println(file.getPath());
-	                	
+	                	filePath.setText(file.getPath());
 	                    success = true;
 	                }
 	                /* let the source know whether the string was successfully 
