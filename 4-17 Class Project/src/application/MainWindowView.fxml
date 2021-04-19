@@ -66,12 +66,12 @@
       </TableView>
       <ImageView fx:id="levelImage" fitHeight="356.0" fitWidth="337.0" layoutX="32.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/CS%203443/project/items/game%20level%206%20.jpg" />
+            <Image url="@../../../../../eclipse-workspace/4-17%20Class%20Project/src/images/character%20image%20.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="136.0" fitWidth="685.0" layoutX="64.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/CS%203443/project/Title.jpg" />
+            <Image url="@../../../../../eclipse-workspace/4-17%20Class%20Project/src/images/Title.jpg" />
          </image>
       </ImageView>
       <Label fx:id="checkCount" layoutX="393.0" layoutY="853.0" text="Check Count" textFill="RED" />
