@@ -41,17 +41,6 @@ public class Reward implements Serializable{
 		return img;
 	}
 	
-	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
-	    in.defaultReadObject();
-	    String url = (String) in.readObject();
-	    if (url != null) {
-	        img = new ImageView(url);
-	    }
-	}
-
-	private void writeObject(ObjectOutputStream out) throws IOException {
-	    out.defaultWriteObject();
-	    out.writeObject(img == null ? null : img.getId());
-	}
+	
 
 }

@@ -2,6 +2,7 @@ package application;
 
 
 import java.io.File;
+import application.RewardModel;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -82,121 +83,42 @@ public class RewardController implements Initializable {
 //	ArrayList<Reward> currentReward = new ArrayList<>();
 	
 	public void createReward() throws MalformedURLException {
-		
-		if(label.getText().trim().isEmpty() || description.getText().trim().isEmpty() || cost.getText().trim().isEmpty()) {
-        	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
-        	a.setContentText("Please don't leave any of the text fields empty");
-        	a.show();
-        } else {
-        	
-        		    try {
-        			ImageView img1 = new ImageView(new Image(file.toURI().toURL().toExternalForm()));
-        			 img1.setFitHeight(200);
-        			 img1.setFitWidth(200);
-        			 img1.setPreserveRatio(true);
-					Reward newR = new Reward(img1, label.getText(), description.getText(), Integer.parseInt(cost.getText()));
-					
-//					try {
-//				         FileOutputStream fileOut = new FileOutputStream("/tmp/employee.ser");
-//				         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//				         currentReward.add(newR);
-//				         out.writeObject(currentReward);
-//				         out.close();
-//				         fileOut.close();
-//				         System.out.printf("Serialized data is saved in /tmp/employee.ser");
-//				      } catch (IOException i) {
-//				         i.printStackTrace();
-//				      }
-					
-					shop.add(newR);
+	
+		boolean validInput = RewardModel.validInput(label, description, cost);
+		if(validInput) {
+			RewardModel.createNewReward(label, description, cost, file, shop, purchaseTable);
+			imageBox.setStyle("-fx-background-color: white;");
+			label.clear();
+			description.clear();
+			cost.clear();
+			filePath.setText("");
+		}
 					
 					
-					purchaseTable.setItems(shop);
-					
-	                imageBox.setStyle("-fx-background-color: white;");
-					
-	                
-	                
-					label.clear();
-					description.clear();
-					cost.clear();
-					filePath.setText("");
-					
-        		    } catch(NullPointerException n) {
-        		    	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
-        	        	a.setContentText("The image wasn't found or wasn't dragged into the program.");
-        	        	a.show();
-        		    } catch(IllegalArgumentException e) {
-        		    	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
-        	        	a.setContentText("You inputted a non numeric value in the cost field.");
-        	        	a.show();
-        		    } 
-        		}
         
 	}
 	
 	public void buyReward() {
-		ObservableList<Reward> selected, allItems;
-		Reward inv = purchaseTable.getSelectionModel().getSelectedItem();
-		allItems = purchaseTable.getItems();
-		selected = purchaseTable.getSelectionModel().getSelectedItems();
 		
-		inventory.add(inv);
-		
-		
-		
-		sellTable.setItems(inventory);
-		selected.forEach(allItems::remove);
-		
-		
-		
-		int rewardCost = inv.getCost();
-		
-		int goldBalance = Integer.parseInt(gold.getText()) - rewardCost;
-		
-		gold.setText(String.valueOf(goldBalance));
+		RewardModel.purchaseReward(purchaseTable, inventory, sellTable, gold);
 		
 	}
 	
 	public void sellReward() {
-		ObservableList<Reward> selected, allItems;
-		Reward sell = sellTable.getSelectionModel().getSelectedItem();
-		allItems = sellTable.getItems();
-
-		descriptionLabel.setText(sell.getDescription());
-		selected = sellTable.getSelectionModel().getSelectedItems();
-	
-		selected.forEach(allItems::remove);
-		
-		
-		int rewardCost = sell.getCost();
-		
-		int goldBalance = Integer.parseInt(gold.getText()) + rewardCost;
-		
-		gold.setText(String.valueOf(goldBalance));
-		
-		descriptionLabel.setText("");
+		RewardModel.sellReward(purchaseTable, inventory, sellTable, descriptionLabel, gold);
 	}
 	
 	@FXML
 	public void showDescription() {
-		Reward inv = purchaseTable.getSelectionModel().getSelectedItem();
 		
-		descriptionLabel.setText(inv.getDescription());
+		RewardModel.showRewardDescription(purchaseTable, descriptionLabel);
+		
 	}
 	
 	@FXML
 	public void suggestedGoldCalc() {
-		int last, dollars;
-		if(!lastTime.getText().isEmpty() || !lastTime.getText().matches("[0-9]") &&
-				!cost.getText().isEmpty() || !cost.getText().matches("[0-9]")) {
-			last = Integer.parseInt(lastTime.getText());
-			dollars = Integer.parseInt(cost.getText());
-			
-			
-			int result = last * 40 + (dollars * 80);
-			suggestedGold.setText(String.valueOf(result));
-		} 
+		
+		RewardModel.getSuggestedGold(lastTime, cost, suggestedGold);
 			
 	}
 	
@@ -252,32 +174,8 @@ public class RewardController implements Initializable {
 	            }
 	        });
 		
-//		try {
-//			if (save.createNewFile()) {
-//		        System.out.println("File created: " + save.getName());
-//		      } else {
-//		        System.out.println("File already exists.");
-//		      }
-//	         FileInputStream fileIn = new FileInputStream(save);
-//	         ObjectInputStream in = new ObjectInputStream(fileIn);
-//	         Reward r = null;
-//	         Reward[] rArr = new Reward[5];
-//	         
-//	         ArrayList<Reward> rewardStorage = new ArrayList<>();
-//	         rewardStorage = (ArrayList<Reward>) in.readObject();
-//	         
-//	         for(int i = 0; i < rewardStorage.size();i++) {
-//	        	 rewardStorage.get(i).getCost();
-//	        	 rewardStorage.get(i).getDescription();
-//	        	 rewardStorage.get(i).getImg();
-//	        	 rewardStorage.get(i).getName();
-//	         }
-//	         in.close();
-//	         fileIn.close();
-//	      } catch (IOException | ClassNotFoundException i) {
-//	         i.printStackTrace();
-//	         return;
-//	      } 
+
+       
 		gold.setText("100");
 		
 		
