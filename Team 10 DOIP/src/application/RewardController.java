@@ -2,8 +2,14 @@ package application;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -31,6 +37,7 @@ public class RewardController implements Initializable {
 	ObservableList<Reward> shop = FXCollections.observableArrayList();
 	ObservableList<Reward> inventory = FXCollections.observableArrayList();
 	
+	
 	@FXML
 	private Label gold;
 	@FXML
@@ -46,13 +53,9 @@ public class RewardController implements Initializable {
 	@FXML
 	private TableColumn<Reward, String> pRewardCol;
 	@FXML
-	private TableColumn<Reward, String> pDescriptionCol;
-	@FXML
 	private TableColumn<Reward, Integer> pCostCol;
 	@FXML
 	private TableColumn<Reward, String> sRewardCol;
-	@FXML
-	private TableColumn<Reward, String> sDescriptionCol;
 	@FXML
 	private TableColumn<Reward, Integer> sCostCol;
 	@FXML
@@ -63,12 +66,20 @@ public class RewardController implements Initializable {
 	private VBox imageBox = new VBox();
 	@FXML
 	private Label filePath;
+	@FXML
+	private Label descriptionLabel;
+	@FXML
+	private Label suggestedGold;
+	@FXML
+	private TextArea lastTime;
+	@FXML
+	private TextArea goldCost;
 	
 	private File file;
 	
 	Alert a = new Alert(AlertType.NONE);
-	String check = "[0-9]";
 	
+//	ArrayList<Reward> currentReward = new ArrayList<>();
 	
 	public void createReward() throws MalformedURLException {
 		
@@ -78,12 +89,25 @@ public class RewardController implements Initializable {
         	a.show();
         } else {
         	
-        		
+        		    try {
         			ImageView img1 = new ImageView(new Image(file.toURI().toURL().toExternalForm()));
         			 img1.setFitHeight(200);
         			 img1.setFitWidth(200);
         			 img1.setPreserveRatio(true);
 					Reward newR = new Reward(img1, label.getText(), description.getText(), Integer.parseInt(cost.getText()));
+					
+//					try {
+//				         FileOutputStream fileOut = new FileOutputStream("/tmp/employee.ser");
+//				         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//				         currentReward.add(newR);
+//				         out.writeObject(currentReward);
+//				         out.close();
+//				         fileOut.close();
+//				         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+//				      } catch (IOException i) {
+//				         i.printStackTrace();
+//				      }
+					
 					shop.add(newR);
 					
 					
@@ -91,10 +115,22 @@ public class RewardController implements Initializable {
 					
 	                imageBox.setStyle("-fx-background-color: white;");
 					
+	                
+	                
 					label.clear();
 					description.clear();
 					cost.clear();
 					filePath.setText("");
+					
+        		    } catch(NullPointerException n) {
+        		    	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
+        	        	a.setContentText("The image wasn't found or wasn't dragged into the program.");
+        	        	a.show();
+        		    } catch(IllegalArgumentException e) {
+        		    	a.setAlertType(AlertType.WARNING); // makes the alarm a warning type of alarm
+        	        	a.setContentText("You inputted a non numeric value in the cost field.");
+        	        	a.show();
+        		    } 
         		}
         
 	}
@@ -126,35 +162,60 @@ public class RewardController implements Initializable {
 		ObservableList<Reward> selected, allItems;
 		Reward sell = sellTable.getSelectionModel().getSelectedItem();
 		allItems = sellTable.getItems();
-		
+
+		descriptionLabel.setText(sell.getDescription());
 		selected = sellTable.getSelectionModel().getSelectedItems();
-		
+	
 		selected.forEach(allItems::remove);
+		
 		
 		int rewardCost = sell.getCost();
 		
 		int goldBalance = Integer.parseInt(gold.getText()) + rewardCost;
 		
 		gold.setText(String.valueOf(goldBalance));
+		
+		descriptionLabel.setText("");
+	}
+	
+	@FXML
+	public void showDescription() {
+		Reward inv = purchaseTable.getSelectionModel().getSelectedItem();
+		
+		descriptionLabel.setText(inv.getDescription());
+	}
+	
+	@FXML
+	public void suggestedGoldCalc() {
+		int last, dollars;
+		if(!lastTime.getText().isEmpty() || !lastTime.getText().matches("[0-9]") &&
+				!cost.getText().isEmpty() || !cost.getText().matches("[0-9]")) {
+			last = Integer.parseInt(lastTime.getText());
+			dollars = Integer.parseInt(cost.getText());
+			
+			
+			int result = last * 40 + (dollars * 80);
+			suggestedGold.setText(String.valueOf(result));
+		} 
+			
 	}
 	
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		File save = new File("rewardsave.ser");
+		
 		purchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		sellTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
 		pIconCol.setCellValueFactory(new PropertyValueFactory<>("img"));
 		pIconCol.setPrefWidth(90);
 		pRewardCol.setCellValueFactory(new PropertyValueFactory<Reward, String>("name"));
-		pDescriptionCol.setCellValueFactory(new PropertyValueFactory<Reward, String>("description"));
 		pCostCol.setCellValueFactory(new PropertyValueFactory<Reward, Integer>("cost"));
 
 		sIconCol.setCellValueFactory(new PropertyValueFactory<>("img"));
 		sIconCol.setPrefWidth(90);
 		sRewardCol.setCellValueFactory(new PropertyValueFactory<Reward, String>("name"));
-		sDescriptionCol.setCellValueFactory(new PropertyValueFactory<Reward, String>("description"));
 		sCostCol.setCellValueFactory(new PropertyValueFactory<Reward, Integer>("cost"));
 		
 		imageBox.setOnDragOver(new EventHandler<DragEvent>() {
@@ -191,11 +252,39 @@ public class RewardController implements Initializable {
 	            }
 	        });
 		
+//		try {
+//			if (save.createNewFile()) {
+//		        System.out.println("File created: " + save.getName());
+//		      } else {
+//		        System.out.println("File already exists.");
+//		      }
+//	         FileInputStream fileIn = new FileInputStream(save);
+//	         ObjectInputStream in = new ObjectInputStream(fileIn);
+//	         Reward r = null;
+//	         Reward[] rArr = new Reward[5];
+//	         
+//	         ArrayList<Reward> rewardStorage = new ArrayList<>();
+//	         rewardStorage = (ArrayList<Reward>) in.readObject();
+//	         
+//	         for(int i = 0; i < rewardStorage.size();i++) {
+//	        	 rewardStorage.get(i).getCost();
+//	        	 rewardStorage.get(i).getDescription();
+//	        	 rewardStorage.get(i).getImg();
+//	        	 rewardStorage.get(i).getName();
+//	         }
+//	         in.close();
+//	         fileIn.close();
+//	      } catch (IOException | ClassNotFoundException i) {
+//	         i.printStackTrace();
+//	         return;
+//	      } 
 		gold.setText("100");
 		
 		
 		
 	}
+	
+	
 	
 	
 	
