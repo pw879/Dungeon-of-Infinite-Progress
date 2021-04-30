@@ -1,7 +1,19 @@
 package Models;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 //import classes
 import application.MainWindowController;
+import application.Reward;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
@@ -11,7 +23,7 @@ import javafx.scene.image.Image;
 * Class Description: Player - a class containing attributes of the player model 
 * 
 *///===============================================================================
-public class Player {
+public class Player implements Serializable{
 	
 	// declare properties
 	private String playerName;
@@ -47,25 +59,25 @@ public class Player {
 	
 	public void calculateLevel() {   
 		
-			if (playerExperience < 100) playerLevel = 1;
+			if (playerExperience < 200) playerLevel = 1;
 		
-			if ((playerExperience > 100) && (playerExperience < 200)) playerLevel = 2;
+			if ((playerExperience > 200) && (playerExperience < 400)) playerLevel = 2;
 
-			if ((playerExperience > 200) && (playerExperience < 300)) playerLevel = 3;
+			if ((playerExperience > 400) && (playerExperience < 600)) playerLevel = 3;
 				
-			if ((playerExperience > 300) && (playerExperience < 400)) playerLevel = 4;
+			if ((playerExperience > 600) && (playerExperience < 800)) playerLevel = 4;
 			
-			if ((playerExperience > 400) && (playerExperience < 500)) playerLevel = 5;
+			if ((playerExperience > 1000) && (playerExperience < 1200)) playerLevel = 5;
 				
-			if ((playerExperience > 500) && (playerExperience < 600)) playerLevel = 6;
+			if ((playerExperience > 1200) && (playerExperience < 1400)) playerLevel = 6;
 				
-			if ((playerExperience > 600) && (playerExperience < 700)) playerLevel = 7;
+			if ((playerExperience > 1400) && (playerExperience < 1600)) playerLevel = 7;
 				
-			if ((playerExperience > 700) && (playerExperience < 800)) playerLevel = 8;
+			if ((playerExperience > 1600) && (playerExperience < 1800)) playerLevel = 8;
 				
-			if ((playerExperience > 800) && (playerExperience < 900)) playerLevel = 9;
+			if ((playerExperience > 1800) && (playerExperience < 2000)) playerLevel = 9;
 				
-			if (playerExperience > 1000) playerLevel = 10;
+			if (playerExperience > 2000) playerLevel = 10;
 	}
 	
 	
@@ -78,16 +90,16 @@ public class Player {
 	*///===============================================================================
 	
 	public void changeAvatar() {   
-		Image image1 = new Image("\\application\\level 1 .jpg"); 
-		Image image2 = new Image("\\application\\level 2 .jpg"); 
-		Image image3 = new Image("\\application\\game level 3 .jpg"); 
-		Image image4 = new Image("\\application\\game level 4 .jpg"); 
-		Image image5 = new Image("\\application\\game level 5 .jpg"); 
-		Image image6 = new Image("\\application\\game level 6 .jpg"); 
-		Image image7 = new Image("\\application\\game level 7.jpg"); 
-		Image image8 = new Image("\\application\\game level 8 .jpg"); 
-		Image image9 = new Image("\\application\\game level 9.jpg"); 
-		Image image10 = new Image("\\application\\game level 10.jpg"); 
+		Image image1 = new Image("\\images\\level 1 .png"); 
+		Image image2 = new Image("\\images\\level 1 .png"); 
+		Image image3 = new Image("\\images\\level 2 .png"); 
+		Image image4 = new Image("\\images\\level 2 .png"); 
+		Image image5 = new Image("\\images\\level 3 .png"); 
+		Image image6 = new Image("\\images\\level 3 .png"); 
+		Image image7 = new Image("\\images\\level 4 .png"); 
+		Image image8 = new Image("\\images\\level 4 .png"); 
+		Image image9 = new Image("\\images\\level 5 .png"); 
+		Image image10 = new Image("\\images\\level 5 .png"); 
 		
 	
 		if( playerLevel == 1) controller.setLevelImage(image1);
@@ -102,7 +114,6 @@ public class Player {
 		if( playerLevel == 10) controller.setLevelImage(image10);
 		
 	}
-	
 	
 	// getters ====================================================
 	public String getPlayerName() { return playerName; }

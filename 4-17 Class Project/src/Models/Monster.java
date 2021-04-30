@@ -21,6 +21,7 @@ public class Monster {
 	private int monsterStealValue;      // an integer representing the amount of gold used
 	private String monsterType;         // a string indicating the type of monster encountered
 	private String myCardOutcome;       // a string indicating the outcome of a monster battle
+	private InventoryList invList = new InventoryList();
 	
 	
 	/*================================================================================
@@ -74,23 +75,23 @@ public class Monster {
 
 		if (monsterNumber == 1) {
 
-			monsterType = "Goal Troll";
+			monsterType = "GOAL TROLL";
 			monsterLevel = rand.nextInt(3) + 1;
 			monsterStealValue = stealVal(monsterLevel);
 		}
 		if (monsterNumber == 2) {
-			monsterType = "Dark Elven Procrastinator";
+			monsterType = "TIME THIEF";
 			monsterLevel = rand.nextInt(2) + 5;
 			monsterStealValue = stealVal(monsterLevel);
 		}
 		if (monsterNumber == 3) {
-			monsterType = "Corrupted Wizard of Malaise";
+			monsterType = "DARK PROCRASTINATOR";
 			monsterLevel = rand.nextInt(2) + 7;
 			monsterStealValue = stealVal(monsterLevel);
 		}
 		if (monsterNumber == 4) {
 
-			monsterType = "Black Dragon of Stagnation";
+			monsterType = "DRAGON OF SLOTH";
 			monsterLevel = rand.nextInt(2) + 9;
 			monsterStealValue = stealVal(monsterLevel);
 		}
@@ -112,16 +113,26 @@ public class Monster {
 	public void monsterBattle(Player player) {
 		myCardOutcome = "YOU SUCCESSFULLY DEFEND YOUR GOLD!";  // default message
 		
+		
 		// determines if player is lower level than monster
-		if (player.getPlayerLevel() <= monsterLevel) {  // compare players level to monsters
-			player.setPlayerGold(player.getPlayerGold() - monsterStealValue); // monster wins/steals
-			myCardOutcome = ("YOU WERE DEFEATED, AN EXTRA " + monsterStealValue + " GOLD LOST!"); 
-			
+		if (player.getPlayerLevel() <= monsterLevel) {
+			if(invList.hasStone() == false){
+				// compare players level to monsters
+				player.setPlayerGold(player.getPlayerGold() - monsterStealValue); // monster wins/steals
+				myCardOutcome = ("YOU WERE DEFEATED, AN EXTRA " + monsterStealValue + " GOLD LOST!");
+			}
+			//
+			if(invList.hasStone() == true) {
+				myCardOutcome = "YOU USED A SAVING STONE AND ESCAPED WITH YOUR TREASURE!";
+			}
+
 			// if player is out of gold
 			if (player.getPlayerGold() < 0) { 
 				player.setPlayerGold(0);
 				myCardOutcome = "THE LAST OF YOUR GOLD WAS TAKEN!";
 			}
+			
+			// determines if you have a saving stone in inventory
 		} else {monsterStealValue = 0;}
 
 	}
@@ -148,5 +159,16 @@ public class Monster {
 	* Method Description: setters
 	* Used to set private variables for class
 	*///===============================================================================
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// NONE YET
 }
