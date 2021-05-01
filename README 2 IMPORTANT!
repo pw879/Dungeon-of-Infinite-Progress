@@ -1,0 +1,6 @@
+When we were making our project video Friday we realized that the Quartz Lib files were not exported with the project, as well as the font an a few image files.
+
+1. The"lib" folder in this repository contains the necessary lib files
+2. The missing fonts and images folder contains the missing font and some images that were missing(there were just 2). To use the font just right click the ttf file and install. 
+This is coming in late, so I didn't want to mess with my uploaded project after the deadline so the images will likely have to stay out as It would require changes to the program itself. I have included them just so you knonw they were completed.
+But the font and lib files will be necessary for functionality.
